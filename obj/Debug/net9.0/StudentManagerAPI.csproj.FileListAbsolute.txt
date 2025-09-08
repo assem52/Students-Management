@@ -1,0 +1,5 @@
+/Users/assemelmeligy/Desktop/0xCode/Dot_Net_Dev/API/StudentManagerAPI/StudentManagerAPI/obj/Debug/net9.0/StudentManagerAPI.csproj.AssemblyReference.cache
+/Users/assemelmeligy/Desktop/0xCode/Dot_Net_Dev/API/StudentManagerAPI/StudentManagerAPI/obj/Debug/net9.0/StudentManagerAPI.GeneratedMSBuildEditorConfig.editorconfig
+/Users/assemelmeligy/Desktop/0xCode/Dot_Net_Dev/API/StudentManagerAPI/StudentManagerAPI/obj/Debug/net9.0/StudentManagerAPI.AssemblyInfoInputs.cache
+/Users/assemelmeligy/Desktop/0xCode/Dot_Net_Dev/API/StudentManagerAPI/StudentManagerAPI/obj/Debug/net9.0/StudentManagerAPI.AssemblyInfo.cs
+/Users/assemelmeligy/Desktop/0xCode/Dot_Net_Dev/API/StudentManagerAPI/StudentManagerAPI/obj/Debug/net9.0/StudentManagerAPI.csproj.CoreCompileInputs.cache
