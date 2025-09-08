@@ -1,16 +1,15 @@
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.SqlServer.Server;
-using StudentManagerAPI.Entities;
-using StudentManagerAPI.Entities.AppContext;
+using StudentManagerAPI.API.Extensions;
 using StudentManagerAPI.API.Services;
+using StudentManagerAPI.Data;
+using StudentManagerAPI.Entities;
+using System.Text;
 
 namespace StudentManagerAPI;
 
@@ -21,14 +20,13 @@ class Program
         var builder = WebApplication.CreateBuilder(args);
 
 
-        builder.Services.AddDbContext<MyAppContext>(options =>
+
+        // Configure database context
+        builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
         // Configure Identity
-        builder.Services.AddIdentity<User, IdentityRole>()
-            .AddEntityFrameworkStores<MyAppContext>()
-            .AddDefaultTokenProviders();
+        builder.Services.ConfigureIdentity();
 
         // Configure JWT Auth
         var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -51,13 +49,11 @@ class Program
                 ValidAudience = jwtSettings["ValidAudience"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
             };
-
         });
 
-        // Register custom services
-        builder.Services.AddScoped<IAuthService, AuthService>();
-        builder.Services.AddScoped<IAccountService, AccountService>();
-        builder.Services.AddScoped<IRoleService, RoleService>();
+        // Register services
+        builder.Services.ConfigureServices();
+        builder.Services.ConfigureRepositoryManager();
 
         builder.Services.AddControllers();
 

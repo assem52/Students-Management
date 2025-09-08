@@ -12,6 +12,6 @@ public class User : IdentityUser
     public string? Address { get; set; }
     public Department Department { get; set; }
     [ForeignKey(nameof(Department))]
-    public int DepartmentID { get; set; }
+    public int DepartmentId { get; set; }
     
 }
