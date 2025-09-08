@@ -43,7 +43,7 @@ src/
  ├── StudentManager.Infrastructure # Data, Identity, Repositories, UoW
  └── StudentManager.API            # Web API layer (controllers, middleware)
 
-
+```
 ---
 
 ## 🔑 Authentication Flow (JWT + Identity)
@@ -56,10 +56,10 @@ src/
 ---
 
 **🛠 Tech Stack**
-ASP.NET Core 7 Web API
-Entity Framework Core
-ASP.NET Core Identity
-JWT Authentication
-SQL Server
-Repository & Unit of Work Pattern
-Clean Architecture
+- ASP.NET Core 7 Web API
+- Entity Framework Core
+- ASP.NET Core Identity
+- JWT Authentication
+- SQL Server
+- Repository & Unit of Work Pattern
+- Clean Architecture
