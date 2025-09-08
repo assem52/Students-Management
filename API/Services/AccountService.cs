@@ -37,7 +37,7 @@ public class AccountService : IAccountService
             UserName = registerDto.UserName,
             Email = registerDto.Email,
             Name = registerDto.Name,
-            DepartmentID = registerDto.DepartmentId
+            DepartmentId = registerDto.DepartmentId
         };
 
         var result = await _userManager.CreateAsync(user, registerDto.Password);

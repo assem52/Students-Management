@@ -56,7 +56,7 @@ public class AccountController : ControllerBase
                 loginResult.User.Email,
                 loginResult.User.UserName,
                 loginResult.User.Name,
-                DepartmentId = loginResult.User.DepartmentID
+                DepartmentId = loginResult.User.DepartmentId
             }
         });
     }
@@ -104,7 +104,7 @@ public class AccountController : ControllerBase
             profileResult.User.Email,
             profileResult.User.UserName,
             profileResult.User.Name,
-            DepartmentId = profileResult.User.DepartmentID
+            DepartmentId = profileResult.User.DepartmentId
         });
     }
 }
