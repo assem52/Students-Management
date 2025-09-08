@@ -36,11 +36,13 @@ This project is built as a learning-oriented template to understand how **JWT Au
 
 ## 📂 Project Structure (Clean Arch)
 
+```bash
 src/
-├── StudentManager.Domain # Core business entities & logic
-├── StudentManager.Application # Interfaces, DTOs, business services
-├── StudentManager.Infrastructure # Data, Identity, Repositories, UoW
-└── StudentManager.API # Web API layer (controllers, middleware)
+ ├── StudentManager.Domain         # Core business entities & logic
+ ├── StudentManager.Application    # Interfaces, DTOs, business services
+ ├── StudentManager.Infrastructure # Data, Identity, Repositories, UoW
+ └── StudentManager.API            # Web API layer (controllers, middleware)
+
 
 ---
 
