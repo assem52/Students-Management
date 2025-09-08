@@ -48,6 +48,9 @@ namespace StudentManagerAPI.API.Extensions
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
+            // Register RoleService
+            services.AddScoped<RoleService>();
+            
             return services;
         }
     }

@@ -10,7 +10,7 @@ public class User : IdentityUser
     [Length(5, 100)]
     public string Name { get; set; }
     public string? Address { get; set; }
-    public Department Department { get; set; }
+    public Department? Department { get; set; }
     [ForeignKey(nameof(Department))]
     public int DepartmentId { get; set; }
     
