@@ -53,11 +53,6 @@ src/
 
 ---
 
-📖 Why This Matters
-**JWT & Bearer Auth** → Secure, stateless, scalable for APIs.
-**ASP.NET Core Identity** → Handles security complexity (roles, password hashing, tokens).
-**Repository & UoW** → Keeps data layer clean, testable, and independent from EF Core.
-**Clean Architecture **→ Separation of concerns makes the system easy to maintain, extend, and test.
 **🛠 Tech Stack**
 ASP.NET Core 7 Web API
 Entity Framework Core
