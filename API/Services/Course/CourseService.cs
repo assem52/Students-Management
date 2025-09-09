@@ -60,7 +60,6 @@ public class CourseService(
             Description = courseRequest.Description,
             DepartmentId = courseRequest.DeptId
         };
-        // conflicts from main
         return ResultHandler<bool>Ok.(true);
     }
 
