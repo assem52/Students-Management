@@ -156,3 +156,4 @@
 /Users/assemelmeligy/Desktop/0xCode/Dot_Net_Dev/API/StudentManagerAPI/StudentManagerAPI/obj/Debug/net9.0/StudentManagerAPI.pdb
 /Users/assemelmeligy/Desktop/0xCode/Dot_Net_Dev/API/StudentManagerAPI/StudentManagerAPI/obj/Debug/net9.0/StudentManagerAPI.genruntimeconfig.cache
 /Users/assemelmeligy/Desktop/0xCode/Dot_Net_Dev/API/StudentManagerAPI/StudentManagerAPI/obj/Debug/net9.0/ref/StudentManagerAPI.dll
+/Users/assemelmeligy/Desktop/0xCode/Dot_Net_Dev/API/StudentManagerAPI/StudentManagerAPI/obj/Debug/net9.0/StudentManagerAPI.sourcelink.json
