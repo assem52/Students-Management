@@ -9,5 +9,6 @@ public class CourseRequest
     public string Name { get; set; }
     [Required]
     [Length(20, 200)]
-    public string  Description { get; set; }
+    public string Description { get; set; }
+    public int DeptId { get; set; }
 }
