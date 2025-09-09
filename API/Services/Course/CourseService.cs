@@ -60,7 +60,9 @@ public class CourseService(
             Description = courseRequest.Description,
             DepartmentId = courseRequest.DeptId
         };
-        Console.WriteLine("test");
+        Console.WriteLine("Wallahy Conflicts branch" +
+                          "" +
+                          "");
         return ResultHandler<bool>.Ok(true);
     }
 
