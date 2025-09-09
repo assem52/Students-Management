@@ -60,7 +60,7 @@ public class CourseService(
             Description = courseRequest.Description,
             DepartmentId = courseRequest.DeptId
         };
-        return ResultHandler<bool>Ok.(true);
+        return ResultHandler<bool>.Ok(true);
     }
 
     public async Task<ResultHandler<bool>> UpdateCourseAsync(int courseId, CourseRequest courseRequest)
