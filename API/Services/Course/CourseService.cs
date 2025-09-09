@@ -60,6 +60,7 @@ public class CourseService(
             Description = courseRequest.Description,
             DepartmentId = courseRequest.DeptId
         };
+        Console.WriteLine("test");
         return ResultHandler<bool>.Ok(true);
     }
 
