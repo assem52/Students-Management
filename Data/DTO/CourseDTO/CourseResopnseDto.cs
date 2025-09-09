@@ -8,4 +8,5 @@ public class CourseResponseDto
     public string DepartmentName { get; set; }
     public int DepratmentId { get; set; }
     
+    
 }
