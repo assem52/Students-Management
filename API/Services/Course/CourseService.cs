@@ -1,6 +1,7 @@
 using System.Data.Common;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using StudentManagerAPI.API.Services.Course;
 using StudentManagerAPI.Data.DTO.CourseDTO;
@@ -60,9 +61,7 @@ public class CourseService(
             Description = courseRequest.Description,
             DepartmentId = courseRequest.DeptId
         };
-        Console.WriteLine("Wallahy Conflicts branch" +
-                          "" +
-                          "");
+        ConsoleLoggerExtensions.efae
         return ResultHandler<bool>.Ok(true);
     }
 
