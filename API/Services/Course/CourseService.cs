@@ -4,83 +4,41 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using StudentManagerAPI.API.Services.Course;
 using StudentManagerAPI.Data.DTO.CourseDTO;
+using StudentManagerAPI.Data.DTO.Shared;
 using StudentManagerAPI.Data.Repository;
 
 namespace StudentManagerAPI.API.Services;
 
 public class CourseService(
-        CourseRepository courseRepository) : ICourseService
+        CourseRepository courseRepository
+        ,ResultHandler<> resultHander) : ICourseService
 {
     private readonly CourseRepository _courseRepository = courseRepository;
+    private readonly Resopns
 
-    public async Task CreateCourseAsync(CourseRequest courseRequest)
+
+    public Task<ResultHandler<List<CourseResponseDto>>> GetAllCoursesAsync()
     {
-        if (courseRequest == null)
-            throw new ArgumentNullException(nameof(courseRequest));
-
-        var course = new Entities.Course
-        {
-            Name = courseRequest.Name,
-            Description = courseRequest.Description,
-            DepartmentId = courseRequest.DeptId
-        };
-        await _courseRepository.AddAsync(course);
+        throw new NotImplementedException();
     }
 
-    public async Task DeleteCourseAsync(int courseId)
+    public Task<ResultHandler<CourseResponseDto>> GetCourseByIdAsync(int courseId)
     {
-        var course = _courseRepository.GetByIdAsync(courseId);
-        if (course == null)
-        {
-            
-        }
-
-        await _courseRepository.Delete(course);
-        
+        throw new NotImplementedException();
     }
 
-    public async Task<List<CourseResponseDto>> GetAllCoursesAsync()
+    public Task<ResultHandler<bool>> CreateCourseAsync(CourseRequest courseRequest)
     {
-        var courses = await _courseRepository.GetAllAsync();
-        var response = new List<CourseResponseDto>();
-        foreach (var course in courses)
-        {
-            CourseResponseDto courseResp = new CourseResponseDto();
-            courseResp.Id = course.Id;
-            courseResp.Name = course.Name;
-            
-            response.Add(courseResp);
-        }
-
-        return response;
+        throw new NotImplementedException();
     }
 
-    public async Task<CourseResponseDto> GetCourseByIdAsync(int courseId)
+    public Task<ResultHandler<bool>> UpdateCourseAsync(int courseId, CourseRequest courseRequest)
     {
-        var course = await _courseRepository.GetByIdAsync(courseId);
-        if (course == null)
-        {
-            return null;
-        }
-
-        var courseResponse = new CourseResponseDto()
-        {
-            Id = course.Id,
-            Name = course.Name,
-            Description = course.Description
-        };
-        return courseResponse;
-
+        throw new NotImplementedException();
     }
 
-    public Task UpdateCourseAsync(int courseId, CourseRequest courseRequest)
+    public Task<ResultHandler<bool>> DeleteCourseAsync(int courseId)
     {
-        var course = await _courseRepository.GetByIdAsync(courseId);
-        if (course == null)
-        {
-            return  Task.CompletedTask;
-        }
-
-        _courseRepository.Update(course);
+        throw new NotImplementedException();
     }
 }
