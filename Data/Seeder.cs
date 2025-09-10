@@ -13,8 +13,8 @@ namespace StudentManagerAPI.API.Seeding
         {
             using var scope = serviceProvider.CreateScope();
             var services = scope.ServiceProvider;
-
-            var roleService = services.GetRequiredService<RoleService>();
+            
+            var roleService = serviceProvider.GetRequiredService<IRoleService>();
             await roleService.EnsureRolesExistAsync(new[] { "Admin", "Instructor", "Student" });
 
             var userManager = services.GetRequiredService<UserManager<User>>();
