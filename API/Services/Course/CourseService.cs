@@ -7,30 +7,41 @@ using StudentManagerAPI.API.Services.Course;
 using StudentManagerAPI.Data.DTO.CourseDTO;
 using StudentManagerAPI.Data.DTO.Shared;
 using StudentManagerAPI.Data.Repository;
+using StudentManagerAPI.Data.UnitOfWork;
 
 namespace StudentManagerAPI.API.Services;
 
-public class CourseService(
-    CourseRepository courseRepository) : ICourseService
+public class CourseService : ICourseService
 {
-    private readonly CourseRepository _courseRepository = courseRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
+    public CourseService(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
 
     public async Task<ResultHandler<List<CourseResponseDto>>> GetAllCoursesAsync()
     {
-        var courses = await _courseRepository.GetAllAsync();
+        var courseRepository = _unitOfWork.GetRepository<Entities.Course>();
+        var courses = await courseRepository.GetAllAsync();
+        
         var result = courses.Select(c => new CourseResponseDto
         {
             Id = c.Id,
             Name = c.Name,
             Description = c.Description,
+            DepartmentName = c.Department?.Name,
         }).ToList();
+
         return ResultHandler<List<CourseResponseDto>>.Ok(result);
     }
 
+
     public async Task<ResultHandler<CourseResponseDto>> GetCourseByIdAsync(int courseId)
     {
-        var course = await _courseRepository.GetByIdAsync(courseId);
+        var courseRepository = _unitOfWork.GetRepository<Entities.Course>();
+        var course = await courseRepository.GetByIdAsync(courseId);
+
         if (course == null)
         {
             return ResultHandler<CourseResponseDto>.Fail("Course Not Found!");
@@ -41,11 +52,10 @@ public class CourseService(
             Id = course.Id,
             Name = course.Name,
             Description = course.Description,
-            DepartmentName = course.Department.Name, 
-            DepratmentId = course.Department.Id,
+            DepartmentName = course.Department?.Name,
         };
-        
-    return ResultHandler<CourseResponseDto>.Ok(result);
+
+        return ResultHandler<CourseResponseDto>.Ok(result);
     }
 
     public async Task<ResultHandler<bool>> CreateCourseAsync(CourseRequest courseRequest)
@@ -55,41 +65,49 @@ public class CourseService(
             return ResultHandler<bool>.Fail("Invalid Course Input!");
         }
 
+        var courseRepository = _unitOfWork.GetRepository<Entities.Course>();
         var course = new Entities.Course
         {
             Name = courseRequest.Name,
             Description = courseRequest.Description,
             DepartmentId = courseRequest.DeptId
         };
-        await _courseRepository.AddAsync(course);
+
+        await courseRepository.AddAsync(course);
+        await _unitOfWork.SaveChangesAsync();
+
         return ResultHandler<bool>.Ok(true);
     }
 
     public async Task<ResultHandler<bool>> UpdateCourseAsync(int courseId, CourseRequest courseRequest)
     {
-        var course = await _courseRepository.GetByIdAsync(courseId);
-        if(course == null) 
+        var courseRepository = _unitOfWork.GetRepository<Entities.Course>();
+        var course = await courseRepository.GetByIdAsync(courseId);
+        
+        if (course == null) 
             return ResultHandler<bool>.Fail("Course Not Found!");
-        if (courseRequest == null)
-            return ResultHandler<bool>.Fail("Invalid Course Input!");
         
         course.Name = courseRequest.Name;
         course.Description = courseRequest.Description;
         course.DepartmentId = courseRequest.DeptId;
 
-        _courseRepository.Update(course);
+        courseRepository.Update(course);
+        await _unitOfWork.SaveChangesAsync();
+        
         return ResultHandler<bool>.Ok(true);
     }
 
     public async Task<ResultHandler<bool>> DeleteCourseAsync(int courseId)
     {
-        var course = await _courseRepository.GetByIdAsync(courseId);
-        if (course == null)
-            return ResultHandler<bool>.Fail("Course Npt Found");
+        var courseRepository = _unitOfWork.GetRepository<Entities.Course>();
+        var course = await courseRepository.GetByIdAsync(courseId);
         
-        _courseRepository.Delete(course);
+        if (course == null)
+            return ResultHandler<bool>.Fail("Course Not Found");
+        
+        courseRepository.Delete(course);
+        await _unitOfWork.SaveChangesAsync();
+        
         return ResultHandler<bool>.Ok(true);
     }
 }
-
-    
