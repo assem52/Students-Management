@@ -5,6 +5,7 @@ using StudentManagerAPI.Data;
 using StudentManagerAPI.Data.Repository;
 using StudentManagerAPI.Entities;
 using StudentManagerAPI.API.Services;
+using StudentManagerAPI.API.Services.Course;
 using StudentManagerAPI.Data.Repository.GenericRepository;
 using StudentManagerAPI.Data.UnitOfWork;
 
@@ -43,6 +44,10 @@ namespace StudentManagerAPI.API.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ICourseService, CourseService>();
+            
+            // Register Repositories
+            services.AddScoped<CourseRepository>();
             
             // Register generic repository
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

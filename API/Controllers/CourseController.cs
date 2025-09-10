@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagerAPI.API.Services;
+using StudentManagerAPI.API.Services.Course;
 using StudentManagerAPI.Data.DTO.CourseDTO;
 using StudentManagerAPI.Data.DTO.Shared;
 using StudentManagerAPI.Entities;
@@ -9,12 +10,12 @@ namespace StudentManagerAPI.API.Controllers;
 
 
 [ApiController]
-[Route("api/course")]
-public class CourseController(CourseService courseService) : ControllerBase
+[Route("api/[controller]")]
+public class CourseController(ICourseService courseService) : ControllerBase
 {
-    private readonly CourseService _courseService = courseService;
+    private readonly ICourseService _courseService = courseService;
 
-    [HttpGet]
+    [HttpGet("Courses")]
     public async Task<IActionResult> GetCourses()
     {
         var result = await _courseService.GetAllCoursesAsync();
@@ -33,25 +34,28 @@ public class CourseController(CourseService courseService) : ControllerBase
         return Ok(result.Data);
     }
 
-    [HttpPost]
-    [Authorize("Admin")]
+    [HttpPost("AddCourse")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> CreateCourse([FromBody] CourseRequest courseRequest)
     {
         if (!ModelState.IsValid)
         {
             return  BadRequest(ModelState);
         }
-        var result = await _courseService.CreateCourseAsync(courseRequest);
-        if (!result.Success)
+        try
         {
-            return  BadRequest(result.ErrorMessage);
+            var result = await _courseService.CreateCourseAsync(courseRequest);
+            return Ok(result);
         }
-
-        return CreatedAtAction(nameof(GetCourse), new { id = result.Data }, result.Data);
+        catch (Exception ex)
+        {
+            // log the error
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
     }
 
     [HttpPut("id")]
-    [Authorize("Admin")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateCourse([FromRoute] int id, [FromBody] CourseRequest courseRequest)
     {
         if (!ModelState.IsValid)
@@ -64,8 +68,8 @@ public class CourseController(CourseService courseService) : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete]
-    [Authorize("Admin")]
+    [HttpDelete("DeleteCourse/{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteCourse(int id)
     {
         var result = await _courseService.DeleteCourseAsync(id);
