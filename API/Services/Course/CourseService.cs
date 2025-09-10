@@ -8,6 +8,7 @@ using StudentManagerAPI.Data.DTO.CourseDTO;
 using StudentManagerAPI.Data.DTO.Shared;
 using StudentManagerAPI.Data.Repository;
 using StudentManagerAPI.Data.UnitOfWork;
+using StudentManagerAPI.Entities;
 
 namespace StudentManagerAPI.API.Services;
 
@@ -64,7 +65,14 @@ public class CourseService : ICourseService
         {
             return ResultHandler<bool>.Fail("Invalid Course Input!");
         }
-
+        // Check for Department Existance first
+        var deptRepository = _unitOfWork.GetRepository<Department>();
+        var exist = await deptRepository.AnyAsync(dept => dept.Id == courseRequest.DeptId);
+        if (!exist)
+        {
+            return ResultHandler<bool>.Fail("Invalid Department Input!");
+        }
+        
         var courseRepository = _unitOfWork.GetRepository<Entities.Course>();
         var course = new Entities.Course
         {
@@ -86,6 +94,15 @@ public class CourseService : ICourseService
         
         if (course == null) 
             return ResultHandler<bool>.Fail("Course Not Found!");
+        
+         // Check for Department Existance first
+        var deptRepository = _unitOfWork.GetRepository<Department>();
+        var exist = await deptRepository.AnyAsync(dept => dept.Id == courseRequest.DeptId);
+        if (!exist)
+        {
+            return ResultHandler<bool>.Fail("Invalid Department Input!");
+        }
+        
         
         course.Name = courseRequest.Name;
         course.Description = courseRequest.Description;

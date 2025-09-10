@@ -56,7 +56,7 @@ public class CourseController(ICourseService courseService) : ControllerBase
 
     [HttpPut("id")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateCourse([FromRoute] int id, [FromBody] CourseRequest courseRequest)
+    public async Task<IActionResult> UpdateCourse(int id, [FromBody] CourseRequest courseRequest)
     {
         if (!ModelState.IsValid)
         {
