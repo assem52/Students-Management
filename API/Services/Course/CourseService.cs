@@ -61,7 +61,7 @@ public class CourseService(
             Description = courseRequest.Description,
             DepartmentId = courseRequest.DeptId
         };
-        ConsoleLoggerExtensions.efae
+        await _courseRepository.AddAsync(course);
         return ResultHandler<bool>.Ok(true);
     }
 
@@ -72,6 +72,10 @@ public class CourseService(
             return ResultHandler<bool>.Fail("Course Not Found!");
         if (courseRequest == null)
             return ResultHandler<bool>.Fail("Invalid Course Input!");
+        
+        course.Name = courseRequest.Name;
+        course.Description = courseRequest.Description;
+        course.DepartmentId = courseRequest.DeptId;
 
         _courseRepository.Update(course);
         return ResultHandler<bool>.Ok(true);
