@@ -25,7 +25,7 @@ public class CourseController(ICourseService courseService) : ControllerBase
         }
         return Ok(result.Data);
     }
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetCourse(int id)
     {
         var result = await _courseService.GetCourseByIdAsync(id);
@@ -54,9 +54,9 @@ public class CourseController(ICourseService courseService) : ControllerBase
         }
     }
 
-    [HttpPut("id")]
+    [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> UpdateCourse(int id, [FromBody] CourseRequest courseRequest)
+    public async Task<IActionResult> UpdateCourse([FromRoute] int id, [FromBody] CourseRequest courseRequest)
     {
         if (!ModelState.IsValid)
         {
