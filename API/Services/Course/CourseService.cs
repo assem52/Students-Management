@@ -12,14 +12,9 @@ using StudentManagerAPI.Entities;
 
 namespace StudentManagerAPI.API.Services;
 
-public class CourseService : ICourseService
+public class CourseService(IUnitOfWork unitOfWork) : ICourseService
 {
-    private readonly IUnitOfWork _unitOfWork;
-
-    public CourseService(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<ResultHandler<List<CourseResponseDto>>> GetAllCoursesAsync()
     {
