@@ -22,7 +22,8 @@ public class DepartmentService (IUnitOfWork unitOfWork) : IDepartmentService
             Courses = d.Courses, 
             Students = d.Students,
         }).ToList();
-        if(result.Any())    
+        
+        if (!result.Any())
             return ResultHandler<List<DepartmentResponse>>.Fail("No departments found");
         
         return ResultHandler<List<DepartmentResponse>>.Ok(result);

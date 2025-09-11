@@ -44,7 +44,7 @@ public class DepartmentController(IDepartmentService departmentService) : Contro
         return Ok(result.Data);
     }
 
-    [HttpPost("update")]
+    [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateDepartment(int id, DepartmentRequest department)
     {
