@@ -23,7 +23,7 @@ namespace StudentManagerAPI.API.Seeding
             var adminEmail = "admin@studentmanager.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-            // ✅ Ensure Department exists
+            // Ensure Department exists
             var defaultDepartment = await dbContext.Departments.FirstOrDefaultAsync();
             if (defaultDepartment == null)
             {
@@ -32,7 +32,7 @@ namespace StudentManagerAPI.API.Seeding
                 await dbContext.SaveChangesAsync();
             }
 
-            // ✅ Seed Admin user
+            // Seed Admin user
             if (adminUser == null)
             {
                 var admin = new User

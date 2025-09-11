@@ -23,7 +23,7 @@ class Program
 
         var app = builder.Build();
 
-        // 🔑 Database Seeding (Roles + Admin + Default Department)
+        // Database Seeding (Roles + Admin + Default Department)
         await Seeder.SeedAsync(app.Services);
 
         // Middleware pipeline
