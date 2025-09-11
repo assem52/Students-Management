@@ -13,7 +13,7 @@ public class DepartmentService (IUnitOfWork unitOfWork) : IDepartmentService
     public async Task<ResultHandler<List<DepartmentResponse>>> GetAllDepartmentsAsync()
     {
         var deptRepo = _unitOfWork.GetRepository<Department>();
-        var depts = await deptRepo.GetAllAsync();
+        var depts = await deptRepo.GetAllAsync(d => d.Courses, d => d.Students);
 
         var result = depts.Select(d => new DepartmentResponse()
         {
@@ -32,7 +32,7 @@ public class DepartmentService (IUnitOfWork unitOfWork) : IDepartmentService
     public async Task<ResultHandler<DepartmentResponse>> GetDepartmentByIdAsync(int departmentId)
     {
         var  departmentRepo = _unitOfWork.GetRepository<Department>();
-        var department = await departmentRepo.GetByIdAsync(departmentId);
+        var department = await departmentRepo.GetByIdAsync(departmentId, d => d.Courses, d => d.Students);
         if(department == null)
             return ResultHandler<DepartmentResponse>.Fail("No department found");
 

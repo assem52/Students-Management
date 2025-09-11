@@ -19,7 +19,7 @@ public class CourseService(IUnitOfWork unitOfWork) : ICourseService
     public async Task<ResultHandler<List<CourseResponseDto>>> GetAllCoursesAsync()
     {
         var courseRepository = _unitOfWork.GetRepository<Entities.Course>();
-        var courses = await courseRepository.GetAllAsync();
+        var courses = await courseRepository.GetAllAsync(c => c.Department);
         
         var result = courses.Select(c => new CourseResponseDto
         {
@@ -36,7 +36,7 @@ public class CourseService(IUnitOfWork unitOfWork) : ICourseService
     public async Task<ResultHandler<CourseResponseDto>> GetCourseByIdAsync(int courseId)
     {
         var courseRepository = _unitOfWork.GetRepository<Entities.Course>();
-        var course = await courseRepository.GetByIdAsync(courseId);
+        var course = await courseRepository.GetByIdAsync(courseId, c => c.Department);
 
         if (course == null)
         {

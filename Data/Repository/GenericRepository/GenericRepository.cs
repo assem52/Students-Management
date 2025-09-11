@@ -21,9 +21,33 @@ namespace StudentManagerAPI.Data.Repository
             return await _dbSet.AsNoTracking().ToListAsync();
         }
 
+        public virtual async Task<List<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet.AsNoTracking();
+            
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            
+            return await query.ToListAsync();
+        }
+
         public virtual async Task<T?> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
+        }
+
+        public virtual async Task<T?> GetByIdAsync(int id, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet.AsQueryable();
+            
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            
+            return await query.FirstOrDefaultAsync(e => EF.Property<int>(e, "Id") == id);
         }
 
         public virtual async Task AddAsync(T entity)
