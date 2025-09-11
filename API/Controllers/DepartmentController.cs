@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StudentManagerAPI.API.Seeding.DTO.DepartmentDTO;
 using StudentManagerAPI.API.Services;
 using StudentManagerAPI.Entities;
 
