@@ -123,6 +123,7 @@ namespace StudentManagerAPI.API.Extensions
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IStudentService, StudentService>();
             return services;
         }
 
