@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace StudentManagerAPI.API.Controllers;
-
-public class StudentController : Controller
+[ApiController]
+[Route("api/[controller]")]
+public class StudentController(IUserService studentService) : ControllerBase
 {
-    
-    
+    private readonly IUserService _studentService = studentService;
+
+
 }
