@@ -67,6 +67,7 @@ public class StudentService(IUnitOfWork unitOfWork) : IStudentService
             Address = dto.Addres,
             DepartmentId = dto.DepartmentId
         };
+        
         await studentRepo.AddAsync(std);
         await _unitOfWork.SaveChangesAsync();
         
