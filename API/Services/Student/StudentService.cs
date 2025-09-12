@@ -48,17 +48,27 @@ public class StudentService(IUnitOfWork unitOfWork) : IStudentService
     {
         if(dto == null)
             return  ResultHandler<bool>.Fail("Invalid request");
+        
+        // Check if department exists
+        var departmentRepo = _unitOfWork.GetRepository<Department>();
+        var department = await departmentRepo.GetByIdAsync(dto.DepartmentId);
+
+        if (department == null)
+            return ResultHandler<bool>.Fail("Invalid Department Id");
+        
         var studentRepo = _unitOfWork.GetRepository<User>();
         
         var std = new User
         {
             Name = dto.Name,
             Email = dto.Email,
+            UserName = dto.Email,
+            PasswordHash = "assem123",
             Address = dto.Addres,
             DepartmentId = dto.DepartmentId
         };
-        studentRepo.AddAsync(std);
-        _unitOfWork.SaveChangesAsync();
+        await studentRepo.AddAsync(std);
+        await _unitOfWork.SaveChangesAsync();
         
         return ResultHandler<bool>.Ok(true);
     }
@@ -91,7 +101,7 @@ public class StudentService(IUnitOfWork unitOfWork) : IStudentService
             return ResultHandler<bool>.Fail("No student found");
         studentRepo.Delete(std);
         
-        _unitOfWork.SaveChangesAsync();
+        await _unitOfWork.SaveChangesAsync();
         return ResultHandler<bool>.Ok(true);
     }
 }
