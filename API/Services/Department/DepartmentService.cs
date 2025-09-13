@@ -50,9 +50,11 @@ public class DepartmentService (IUnitOfWork unitOfWork) : IDepartmentService
     public async Task<ResultHandler<bool>> CreateDepartmentAsync(DepartmentRequest dept)
     {
         var deptRepo = _unitOfWork.GetRepository<Department>();
-        
-        // var context = _unitOfWork.GetRepository<AppDbContext>();
-        // var exist = context.Departments.Contain(d => d.Name = dept.Name);
+
+        var existed = await deptRepo.AnyAsync(d => d.Name.ToLower() == dept.Name.Trim().ToLower());
+        if (existed)
+            return ResultHandler<bool>.Fail("Department Already Existed!");
+
         var department = new Department()
         {
             Name = dept.Name,
@@ -71,6 +73,11 @@ public class DepartmentService (IUnitOfWork unitOfWork) : IDepartmentService
         
         if(department == null)
             return ResultHandler<bool>.Fail("No department found");
+
+        var existed = await deptRepo.AnyAsync(dept => dept.Name.ToLower() == dept.Name.Trim().ToLower());
+        if (existed)
+            return ResultHandler<bool>.Fail("Departmetn Already existed!");
+            
         
         department.Name = dept.Name;
         department.Description = dept.Description;

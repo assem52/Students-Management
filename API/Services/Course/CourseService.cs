@@ -68,7 +68,12 @@ public class CourseService(IUnitOfWork unitOfWork) : ICourseService
             return ResultHandler<bool>.Fail("Invalid Department Input!");
         }
         
-        var courseRepository = _unitOfWork.GetRepository<Entities.Course>();
+        var courseRepository =  _unitOfWork.GetRepository<Entities.Course>();
+
+        var existed = await courseRepository.AnyAsync(c => c.Name.ToLower() == courseRequest.Name.Trim().ToLower());
+        if (existed)
+            return ResultHandler<bool>.Fail("Course Already Existed");
+
         var course = new Entities.Course
         {
             Name = courseRequest.Name,
@@ -89,6 +94,10 @@ public class CourseService(IUnitOfWork unitOfWork) : ICourseService
         
         if (course == null) 
             return ResultHandler<bool>.Fail("Course Not Found!");
+
+        var existed = await courseRepository.AnyAsync(c => c.Name.ToLower() == courseRequest.Name.Trim().ToLower());
+        if (existed)
+            return ResultHandler<bool>.Fail("Course Already Existed");
         
          // Check for Department Existance first
         var deptRepository = _unitOfWork.GetRepository<Department>();
